@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraSwitchTrigger : MonoBehaviour
+public class CameraSwitchTriggerF : MonoBehaviour
 {
     public int cameraToSwitch;
     public Collider cameraTrigger;
@@ -21,6 +21,6 @@ public class CameraSwitchTrigger : MonoBehaviour
         Player player = GetComponent<Player>();
 
         if (player != null)
-            CameraManager.instance.CameraSwitch(cameraToSwitch);
+            CameraManagerF.instance.CameraSwitch(cameraToSwitch);
     }
 }

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-public class CameraManager : MonoBehaviour
+public class CameraManagerF : MonoBehaviour
 {
-    public static CameraManager instance;
+    public static CameraManagerF instance;
 
     public int initialCameraIndex;
     public List <CinemachineVirtualCamera> cameraList;

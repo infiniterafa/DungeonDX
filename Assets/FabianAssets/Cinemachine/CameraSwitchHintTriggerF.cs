@@ -6,7 +6,7 @@ using UnityEngine;
 /// Sobrecarga de CameraSwitch, tiene el mismo comportamiento base pero después de un tiempo especificado
 /// regresará a la cámara especificada y desactivará el collider/trigger ppensado para mostrar la pista
 /// </summary>
-public class CameraSwitchHintTrigger : CameraSwitchTrigger
+public class CameraSwitchHintTriggerF : CameraSwitchTriggerF
 {
     public int cameraToReturn;
     public float hintTime;
@@ -21,6 +21,6 @@ public class CameraSwitchHintTrigger : CameraSwitchTrigger
     IEnumerator ReturnToCameraRoutine()
     {
         yield return new WaitForSeconds(hintTime);
-        CameraManager.instance.CameraSwitch(cameraToReturn);
+        CameraManagerF.instance.CameraSwitch(cameraToReturn);
     }
 }
