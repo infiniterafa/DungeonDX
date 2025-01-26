@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
 
     public float _speed;
 
+    public int hp = 10;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -51,5 +53,10 @@ public class Player : MonoBehaviour
         rb.velocity = new Vector3(moveDir.x, rb.velocity.y , moveDir.z);
 
         //this.transform.position += new Vector3(moveDir.x,0,moveDir.z); POS METH
+    }
+
+    public void TakeDamage(int _dmg)
+    {
+        hp -= _dmg;
     }
 }
