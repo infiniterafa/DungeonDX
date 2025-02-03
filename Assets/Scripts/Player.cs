@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Player : MonoBehaviour
 {
@@ -10,10 +11,11 @@ public class Player : MonoBehaviour
     public Vector3 _cameraRight;
 
     public float _speed;
-
     public int hp = 10;
 
-    // Start is called before the first frame update
+    private float attackDuration = .75f;
+    public Collider attackCollider;
+
     void Start()
     {
         while (!rb)
@@ -22,10 +24,10 @@ public class Player : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         Movement();
+        Attack();
     }
 
     void Movement()
@@ -53,6 +55,21 @@ public class Player : MonoBehaviour
         rb.velocity = new Vector3(moveDir.x, rb.velocity.y , moveDir.z);
 
         //this.transform.position += new Vector3(moveDir.x,0,moveDir.z); POS METH
+    }
+
+    private void Attack()
+    {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            StartCoroutine(TurnAttackCollider(attackDuration));
+        }
+    }
+
+    private IEnumerator TurnAttackCollider(float _attackDuration)
+    {
+        attackCollider.gameObject.SetActive(true);
+        yield return new WaitForSeconds(_attackDuration);
+        attackCollider.gameObject.SetActive(false);
     }
 
     public void TakeDamage(int _dmg)

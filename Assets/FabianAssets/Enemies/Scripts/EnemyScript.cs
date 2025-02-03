@@ -20,12 +20,22 @@ public class EnemyScript : MonoBehaviour
 
     private void Update()
     {
-        Movement();
+        if (stats.hp > 0)
+        {
+            Movement();
+        }
+        else
+            gameObject.SetActive(false);
     }
 
     private void Movement()
     {
         agent.destination = agentDestination.position;
+    }
+
+    public void TakeDamage(int _dmg)
+    {
+        stats.hp -= _dmg;
     }
 
     private void Attack(Player _player)
