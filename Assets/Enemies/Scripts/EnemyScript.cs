@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyScript : MonoBehaviour
 {
     public EnemyStatsSO stats;
     public Rigidbody rb;
+
+    public NavMeshAgent agent;
+    public Transform agentDestination;
 
     public float atkTimer;
 
@@ -16,12 +20,22 @@ public class EnemyScript : MonoBehaviour
 
     private void Update()
     {
-        Movement();
+        if (stats.hp > 0)
+        {
+            Movement();
+        }
+        else
+            gameObject.SetActive(false);
     }
 
     private void Movement()
     {
-        rb.transform.position += transform.forward * stats.speed * Time.deltaTime;
+        agent.destination = agentDestination.position;
+    }
+
+    public void TakeDamage(int _dmg)
+    {
+        stats.hp -= _dmg;
     }
 
     private void Attack(Player _player)
