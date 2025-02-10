@@ -21,11 +21,18 @@ public class Player : MonoBehaviour
     private float attackDuration = .75f;
     public Collider attackCollider;
 
+    [SerializeField] private Animator _anim;
+
     void Start()
     {
         while (!rb)
         {
             rb = this.gameObject.GetComponent<Rigidbody>();
+        }
+
+        while (!_anim)
+        {
+            _anim = this.gameObject.GetComponent<Animator>();
         }
 
         hp = maxHp;
@@ -45,8 +52,8 @@ public class Player : MonoBehaviour
             return;
         }
 
-        float horInput = Input.GetAxisRaw("Horizontal") * _speed;
-        float verInput = Input.GetAxisRaw("Vertical") * _speed;
+        float horInput = Input.GetAxisRaw("Horizontal");
+        float verInput = Input.GetAxisRaw("Vertical");
 
         
         _cameraFoward = _mainCamera.transform.forward;
@@ -58,11 +65,12 @@ public class Player : MonoBehaviour
         Vector3 rightRelative = horInput * _cameraRight;
         Vector3 forwardRelative = verInput * _cameraFoward;
 
-        Vector3 moveDir = forwardRelative + rightRelative;
+        Vector3 moveDir = (forwardRelative + rightRelative).normalized * _speed;
 
         rb.velocity = new Vector3(moveDir.x, rb.velocity.y , moveDir.z);
 
-        //this.transform.position += new Vector3(moveDir.x,0,moveDir.z); POS METH
+        _anim.SetFloat("Ver", verInput);
+        _anim.SetFloat("Hor", horInput);
     }
 
     private void Attack()

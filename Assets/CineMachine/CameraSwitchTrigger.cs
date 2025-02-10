@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CameraSwitchTrigger : MonoBehaviour
@@ -14,7 +15,9 @@ public class CameraSwitchTrigger : MonoBehaviour
 
     private CameraManager _cameraManager;
 
-    // Start is called before the first frame update
+    public bool _entrance = false;
+    public bool _exit = true;
+
     void Start()
     {
         while (_staticCamera ==  null)
@@ -37,6 +40,11 @@ public class CameraSwitchTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
+        if(!_entrance)
+        {
+            return;
+        }
+
         Debug.Log(collision);
         _player = collision.GetComponent<Player>();
 
@@ -53,9 +61,26 @@ public class CameraSwitchTrigger : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerExit(Collider collision)
     {
-        
+        if(!_exit)
+        {
+            return;
+        }
+
+        Debug.Log(collision);
+        _player = collision.GetComponent<Player>();
+
+        if (_player != null)
+        {
+            CameraManager.instance.CameraSwitch(_cameraToSwitch);
+
+            Debug.Log(CameraManager.instance.name);
+            if (_cameraManager.GetCurVC(_cameraToSwitch).name == _staticName)
+            {
+                _staticCamera.transform.position = _cameraPos.position;
+                _staticCamera.transform.rotation = _cameraPos.rotation;
+            }
+        }
     }
 }
