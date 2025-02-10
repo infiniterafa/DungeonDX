@@ -11,7 +11,12 @@ public class Player : MonoBehaviour
     public Vector3 _cameraRight;
 
     public float _speed;
-    public int hp = 10;
+
+    [Header("HP")]
+    public bool isDead = false;
+    public int hp;
+    public int maxHp = 10;
+    public HealthBar healthBar;
 
     private float attackDuration = .75f;
     public Collider attackCollider;
@@ -22,6 +27,9 @@ public class Player : MonoBehaviour
         {
             rb = this.gameObject.GetComponent<Rigidbody>();
         }
+
+        hp = maxHp;
+        healthBar.SetMaxHealth(maxHp);
     }
 
     void Update()
@@ -75,5 +83,6 @@ public class Player : MonoBehaviour
     public void TakeDamage(int _dmg)
     {
         hp -= _dmg;
+        healthBar.SetHealth(hp);
     }
 }
