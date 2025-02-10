@@ -7,7 +7,7 @@ public class CameraManager : MonoBehaviour
 {
     [SerializeField] private int _initCam;
     [SerializeField] private List<CinemachineVirtualCamera> _camList;
-    private int _currentCamera; 
+    public int _currentCamera; 
 
     [SerializeField] private KeyCode _nextCamera;
     [SerializeField] private KeyCode _preCamera;
@@ -39,6 +39,7 @@ public class CameraManager : MonoBehaviour
         }
 
         _currentCamera = _initCam;
+        CameraSwitch(_currentCamera);
     }
 
     /// <summary>
@@ -51,6 +52,10 @@ public class CameraManager : MonoBehaviour
         for(int i = 0; i < _camList.Count; i++)
         {
             _camList[i].Priority = i;
+            if(i != _initCam)
+            {
+                _camList[i].gameObject.SetActive(false);
+            }
         }
     }
 
@@ -86,5 +91,10 @@ public class CameraManager : MonoBehaviour
             _currentCamera--;
             CameraSwitch(_currentCamera);
         }
+    }
+
+    public GameObject GetCurVC(int cameraIndex)
+    {
+        return _camList[cameraIndex].gameObject;
     }
 }
