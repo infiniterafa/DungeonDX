@@ -5,7 +5,8 @@ using UnityEngine;
 public class Sword : MonoBehaviour
 {
     //public Collider swordCollider;
-    private int damage = 5;
+    public List<Transform> positionList;
+    public int damage = 5;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -13,5 +14,11 @@ public class Sword : MonoBehaviour
         {
             other.transform.gameObject.GetComponent<EnemyScript>().TakeDamage(damage);
         }
+    }
+
+    public void SetPosition(int index)
+    {
+        transform.localPosition = positionList[index].localPosition;
+        transform.localScale = positionList[index].localScale;
     }
 }
