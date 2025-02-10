@@ -39,6 +39,11 @@ public class Player : MonoBehaviour
     [SerializeField] private Animator _anim;
     Vector3 _rbSpeed;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource _audioSource;
+    public List<AudioClip> _audiosGrunt;
+    public List<AudioClip> _audiosWalk;
+
     void Start()
     {
         while (!_rb)
@@ -49,6 +54,11 @@ public class Player : MonoBehaviour
         while (!_anim)
         {
             _anim = this.gameObject.GetComponent<Animator>();
+        }
+
+        while (!_audioSource)
+        {
+            _audioSource = this.gameObject.GetComponent<AudioSource>();
         }
 
         while (!_attackCollider)
@@ -144,6 +154,13 @@ public class Player : MonoBehaviour
                 Quaternion toRotation = Quaternion.LookRotation(new Vector3(_rbSpeed.x, 0, _rbSpeed.z), Vector3.up);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, _rotationSpeed * Time.deltaTime);
             }
+
+            if (!_audioSource.isPlaying)
+            {
+                var i = Random.Range(0, _audiosWalk.Count);
+                _audioSource.clip = _audiosWalk[i];
+                _audioSource.Play();
+            }
         }
     }
 
@@ -171,6 +188,11 @@ public class Player : MonoBehaviour
                 _sword.SetPosition(1);
                 StartCoroutine(TurnAttackCollider(_attackDuration));
             }
+
+            var i = Random.Range(0,_audiosGrunt.Count);
+            _audioSource.clip = _audiosGrunt[i];
+            _audioSource.Play();
+
             downTime = 0;
             _holding = false;
         }
