@@ -139,6 +139,13 @@ public class Player : MonoBehaviour
         {
             _rotating = true;
         }
+
+        if(_rbSpeed != Vector3.zero && !_audioSource.isPlaying)
+        {
+            var i = Random.Range(0, _audiosWalk.Count);
+            _audioSource.clip = _audiosWalk[i];
+            _audioSource.Play();
+        }
     }
 
     private void Rotate()
@@ -154,13 +161,6 @@ public class Player : MonoBehaviour
                 Quaternion toRotation = Quaternion.LookRotation(new Vector3(_rbSpeed.x, 0, _rbSpeed.z), Vector3.up);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, _rotationSpeed * Time.deltaTime);
             }
-
-            if (!_audioSource.isPlaying)
-            {
-                var i = Random.Range(0, _audiosWalk.Count);
-                _audioSource.clip = _audiosWalk[i];
-                _audioSource.Play();
-            }
         }
     }
 
@@ -173,7 +173,7 @@ public class Player : MonoBehaviour
         }
         if(Input.GetButtonUp("Fire1"))
         {
-            Debug.Log(downTime);
+            //Debug.Log(downTime);
             if(downTime < _holdTime)
             {
                 _anim.SetTrigger("Attack");

@@ -30,7 +30,7 @@ public class EnemyScript : MonoBehaviour
 
     private void Movement()
     {
-        agent.destination = agentDestination.position;
+        agent.destination = agentDestination.position;  
     }
 
     public void TakeDamage(int _dmg)
