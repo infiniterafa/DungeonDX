@@ -33,9 +33,13 @@ public class TorchAnimation : MonoBehaviour
             _curBrightnes = (int)Random.Range(_minBrightnes, _maxBrightnes);
             _waitCount = 0.0f;
         }
-        else if(_curBrightnes > _minBrightnes)
+        else if(_curBrightnes - Time.deltaTime > _minBrightnes)
         {
             _curBrightnes -= Time.deltaTime;
+        }
+        else
+        {
+            _curBrightnes = _minBrightnes;
         }
 
         _light.intensity = Mathf.PingPong(Time.time, _curBrightnes);
