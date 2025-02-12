@@ -925,7 +925,7 @@ Transform:
   - {fileID: 891125335314631209}
   - {fileID: 2077844634420006549}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &7784157123912669156
 MonoBehaviour:
@@ -960,6 +960,11 @@ MonoBehaviour:
   _attackCollider: {fileID: 0}
   _anim: {fileID: 0}
   _audioManager: {fileID: 0}
+  _interactionObject: {fileID: 0}
+  _inventorry: {fileID: 0}
+  canCollect: 0
+  inRange: 0
+  chest: 0
 --- !u!114 &6100250111830827403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1185,6 +1190,54 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 1d43dc53-9a52-4b8b-9f0e-313e8109e686
     m_ActionName: Player/HevyAttack[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7784157123912669156}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: Movement
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: e90de27e-aa6d-49cb-94f1-1e3cd4d26fa2
+    m_ActionName: Player/Movement
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7784157123912669156}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: Rotate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 479051a2-9af0-4615-9658-159e0757851b
+    m_ActionName: Player/New action1
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7784157123912669156}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: Interact
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b53550c0-5f3a-42e4-9e42-a1e98b267a00
+    m_ActionName: Player/Interact
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

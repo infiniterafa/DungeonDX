@@ -5040,7 +5040,7 @@ Transform:
   m_Children:
   - {fileID: 7296454713730292066}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!33 &6853707511719256614
 MeshFilter:
@@ -5154,6 +5154,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _uses: 1
   _turnSpeed: 20
-  _hopSpeed: 0.3
-  _hopTop: 0.25
+  _hopSpeed: 0.5
+  _hopTop: 0.5
   _hopBottom: 0

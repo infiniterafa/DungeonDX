@@ -20,28 +20,21 @@ public class Key : MonoBehaviour
     public float _hopBottom;
     private float _currentHop = 0.0f;
     private Vector3 _startPosition;
+    private Vector3 _deltaPosition;
     private bool _up = true;
 
     // Start is called before the first frame update
     void Start()
     {
-        while (!_player)
-        {
-            _player = GameObject.FindObjectOfType<Player>().gameObject;
-        }
-
-        Debug.Log(_player);
-
-        while (!_inventorry)
-        {
-            _inventorry = GameObject.FindObjectOfType<Inventorry>();
-        }
-
-        _startPosition = transform.localPosition;
+        _player = GameObject.FindObjectOfType<Player>().gameObject;
+        _inventorry = GameObject.FindObjectOfType<Inventorry>();
+        _startPosition = transform.position;
     }
 
     void FixedUpdate()
     {
+        _deltaPosition = transform.position - _startPosition;
+        
         //ROTATION ANIMATION
         _curAng += _turnSpeed * Time.deltaTime;
         if (_curAng >= 360)
@@ -54,9 +47,9 @@ public class Key : MonoBehaviour
         //HOP ANIMATION
         if (_up)
         {
-            if (_currentHop < _hopTop)
+            if (_deltaPosition.y < _hopTop)
             {
-                _currentHop += _hopSpeed * Time.deltaTime;
+                _currentHop = _hopSpeed * Time.deltaTime;
             }
             else
             {
@@ -65,9 +58,9 @@ public class Key : MonoBehaviour
         }
         else
         {
-            if (_currentHop > _hopBottom)
+            if (_deltaPosition.y > _hopBottom)
             {
-                _currentHop -= _hopSpeed * Time.deltaTime;
+                _currentHop = -_hopSpeed * Time.deltaTime;
             }
             else
             {
@@ -75,7 +68,7 @@ public class Key : MonoBehaviour
             }
         }
 
-        gameObject.transform.localPosition = new Vector3(_startPosition.x, _startPosition.y, _startPosition.z + _currentHop);
+        gameObject.transform.position += new Vector3(0.0f,_currentHop, 0.0f); 
     }
 
     void OnCollisionEnter(Collision other)
@@ -85,7 +78,7 @@ public class Key : MonoBehaviour
             _inventorry.TakePickUp(this.gameObject, _uses);
         }
 
-        Debug.Log(other.gameObject.name);
+        //Debug.Log(other.gameObject.name);
     }
 
     void Collect()

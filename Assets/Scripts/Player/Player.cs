@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
     [Header("Input")] 
     public PlayerInput _playerInput;
     public PlayerInputActions _playerInputActions;
+
 
     [Header("Movement")]
     public Rigidbody _rb;
@@ -47,6 +49,13 @@ public class Player : MonoBehaviour
 
     [Header("Audio")]
     [SerializeField] private AudioManager _audioManager;
+    
+    [Header("Inventory - Interactions")]
+    [SerializeField] private GameObject _interactionObject;
+    [SerializeField] private Inventorry _inventorry;
+    public bool canCollect = false;
+    public bool inRange = false;
+    public bool chest = false;
 
     void Awake()
     {
@@ -55,6 +64,7 @@ public class Player : MonoBehaviour
         _playerInputActions.Player.Enable();
         _playerInputActions.Player.Movement.performed += Movement_performed;
         
+        _inventorry = FindObjectOfType<Inventorry>();
         _rb = this.gameObject.GetComponent<Rigidbody>();
         _anim = this.gameObject.GetComponent<Animator>();
         _audioManager =  this.gameObject.GetComponent<AudioManager>();
@@ -150,6 +160,32 @@ public class Player : MonoBehaviour
         {
             _rotating = true;
         }
+    }
+
+    public void Interact(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            TryToInteract();
+            Debug.Log("Interact");
+        }
+    }
+
+    private void TryToInteract()
+    {
+        if (inRange && canCollect)
+        {
+            if (chest)
+            {
+                _interactionObject.GetComponent<Chest>().DropReward();
+            }
+        }
+    }
+
+    public bool HaveKey(GameObject key, GameObject interactingObject)
+    {
+        _interactionObject = interactingObject;
+        return key == null || _inventorry.HaveNeededItem(key);
     }
 
     public void NormalAttack(InputAction.CallbackContext context)
