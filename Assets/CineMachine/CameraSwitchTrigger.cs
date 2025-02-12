@@ -68,7 +68,7 @@ public class CameraSwitchTrigger : MonoBehaviour
             return;
         }
 
-        Debug.Log(collision);
+        //Debug.Log(collision);
         _player = collision.GetComponent<Player>();
 
         if (_player != null)

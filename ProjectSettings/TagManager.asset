@@ -6,11 +6,12 @@ TagManager:
   tags:
   - Enemy
   - Transition
+  - StaticRoomCamera
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - 

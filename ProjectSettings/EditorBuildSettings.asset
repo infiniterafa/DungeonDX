@@ -8,13 +8,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: db9dab63e2aa0a94685787f401ace599
-  - enabled: 0
-    path: Assets/Scenes/MainScene.unity
-    guid: 0030da9eb30874c4cbf63a17ffa07762
   - enabled: 1
     path: Assets/Scenes/SandBoxs/DarkPhenixSandBox.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 0
+    path: Assets/Scenes/MainScene.unity
+    guid: 0030da9eb30874c4cbf63a17ffa07762
+  - enabled: 0
     path: Assets/Scenes/SandBoxs/FabianSandbox.unity
     guid: e1022b1bfb754ea4c8b01107fd0296e8
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: eb137d9a336cf0f4b9c21b1f0d10b472,
+      type: 2}
