@@ -17,4 +17,6 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SandBoxs/FabianSandbox.unity
     guid: e1022b1bfb754ea4c8b01107fd0296e8
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: eb137d9a336cf0f4b9c21b1f0d10b472,
+      type: 2}

@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+    [Header("Input")] 
+    public PlayerInput _playerInput;
+    public PlayerInputActions _playerInputActions;
+
     [Header("Movement")]
     public Rigidbody _rb;
     public Camera _mainCamera;
@@ -16,6 +20,8 @@ public class Player : MonoBehaviour
     public float _rotationSpeed;
     public bool _snapping;
     public bool _rotating = true;
+    
+    private Vector2 _movement;
 
     private float _tempSpeed;
 
@@ -29,10 +35,10 @@ public class Player : MonoBehaviour
     [Header("Attack")]
     public bool _attacking = false;
     public bool _holding = false;
+    public bool _heaviAttak = false;
     public float _holdTime = 1.5f;
     public Collider _attackCollider;
     private float _attackDuration = .5f;
-    private float downTime = 0;
     private Sword _sword;
 
     [Header("Animation")]
@@ -40,35 +46,21 @@ public class Player : MonoBehaviour
     Vector3 _rbSpeed;
 
     [Header("Audio")]
-    [SerializeField] private AudioSource _audioSource;
-    public List<AudioClip> _audiosGrunt;
-    public List<AudioClip> _audiosWalk;
+    [SerializeField] private AudioManager _audioManager;
 
-    void Start()
+    void Awake()
     {
-        while (!_rb)
-        {
-            _rb = this.gameObject.GetComponent<Rigidbody>();
-        }
-
-        while (!_anim)
-        {
-            _anim = this.gameObject.GetComponent<Animator>();
-        }
-
-        while (!_audioSource)
-        {
-            _audioSource = this.gameObject.GetComponent<AudioSource>();
-        }
-
-        while (!_attackCollider)
-        {
-            _attackCollider = FindObjectOfType<Sword>().GetComponent<Collider>();
-        }
-
+        _playerInput = this.gameObject.GetComponent<PlayerInput>();
+        _playerInputActions = new PlayerInputActions();
+        _playerInputActions.Player.Enable();
+        _playerInputActions.Player.Movement.performed += Movement_performed;
+        
+        _rb = this.gameObject.GetComponent<Rigidbody>();
+        _anim = this.gameObject.GetComponent<Animator>();
+        _audioManager =  this.gameObject.GetComponent<AudioManager>();
+        _attackCollider = FindObjectOfType<Sword>().GetComponent<Collider>();
         _sword = _attackCollider.GetComponent<Sword>();
         _attackCollider.gameObject.SetActive(false);
-
         _hp = _maxHp;
         _healthBar.SetMaxHealth(_maxHp);
     }
@@ -77,8 +69,8 @@ public class Player : MonoBehaviour
     {
         if(!_attacking)
         {
+            _movement = _playerInputActions.Player.Movement.ReadValue<Vector2>();
             Movement();
-            Attack();
         }
 
         if(_hp <= 0)
@@ -90,57 +82,31 @@ public class Player : MonoBehaviour
 
     void Movement()
     {
-        if (_mainCamera == null)
+        if (!_mainCamera)
         {
             return;
         }
 
-        WASD();
-
-        if(_rotating)
-            Rotate();
-
-        Animate();
-    }
-
-    private void WASD()
-    {
+        //WASD();
         
-        if(!_holding)
-        {
-            _tempSpeed = _speed;
-        }
-        else
-        {
-            _tempSpeed = _holdingSpeed;
-        }
-
-        float horInput = Input.GetAxisRaw("Horizontal");
-        float verInput = Input.GetAxisRaw("Vertical");
-
-
         _cameraFoward = _mainCamera.transform.forward;
         _cameraRight = _mainCamera.transform.right;
 
         _cameraFoward.y = 0;
         _cameraRight.y = 0;
 
-        Vector3 rightRelative = horInput * _cameraRight;
-        Vector3 forwardRelative = verInput * _cameraFoward;
+        Vector3 rightRelative = _movement.x * _cameraRight;
+        Vector3 forwardRelative = _movement.y * _cameraFoward;
 
         Vector3 moveDir = (forwardRelative + rightRelative).normalized * _tempSpeed;
         _rb.velocity = new Vector3(moveDir.x, _rb.velocity.y, moveDir.z);
+        
+        if(_rotating)
+            Rotate();
 
-        if(Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            _rotating = false;
-        }
-        else if(Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            _rotating = true;
-        }
-
-        if(_rbSpeed != Vector3.zero && !_audioSource.isPlaying)
+        Animate();
+        
+        if(_rbSpeed != Vector3.zero)
         {
             if (_rbSpeed.y != 0)
             {
@@ -148,11 +114,14 @@ public class Player : MonoBehaviour
             }
             else
             {
-                var i = Random.Range(0, _audiosWalk.Count);
-                _audioSource.clip = _audiosWalk[i];
-                _audioSource.Play();
+                _audioManager.PlayWalkSound();
             }
         }
+    }
+
+    public void Movement_performed(InputAction.CallbackContext context)
+    {
+       _movement = context.ReadValue<Vector2>();
     }
 
     private void Rotate()
@@ -171,39 +140,72 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void Attack()
+    public void Rotate(InputAction.CallbackContext context)
     {
-        if (Input.GetButton("Fire1"))
+        if (context.started)
         {
-            downTime += Time.deltaTime;
-            _holding = true;
+            _rotating = false;
         }
-        if(Input.GetButtonUp("Fire1"))
+        else if (context.canceled)
         {
-            //Debug.Log(downTime);
-            if(downTime < _holdTime)
-            {
-                _anim.SetTrigger("Attack");
-                _anim.SetFloat("AttackNum", Random.Range(1, 3));
-                _sword.SetPosition(0);
-                StartCoroutine(TurnAttackCollider(_attackDuration));
-            }
-            else
-            {
-                _anim.SetTrigger("Attack");
-                _anim.SetFloat("AttackNum", 4);
-                _sword.SetPosition(1);
-                StartCoroutine(TurnAttackCollider(_attackDuration));
-            }
+            _rotating = true;
+        }
+    }
 
-            var i = Random.Range(0,_audiosGrunt.Count);
-            _audioSource.clip = _audiosGrunt[i];
-            _audioSource.Play();
+    public void NormalAttack(InputAction.CallbackContext context)
+    {
+        if(_attacking)
+            return;
+        
+        if (context.started)
+        {
+            _holding = true;
+            _tempSpeed = _holdingSpeed;
+        }
+        else if (context.canceled && !_heaviAttak)
+        {
+            _anim.SetTrigger("Attack");
+            _anim.SetFloat("AttackNum", Random.Range(1, 3));
+            _sword.SetPosition(0);
+            StartCoroutine(TurnAttackCollider(_attackDuration));
 
-            downTime = 0;
+            _audioManager.PlayAttackSound(); 
+            
+            _tempSpeed = _speed;
             _holding = false;
         }
     }
+
+    public void HeavyAttack(InputAction.CallbackContext context)
+    {
+        if(_attacking)
+            return;
+        
+        if (context.started)
+        {
+            _holding = true;
+            _tempSpeed = _holdingSpeed;
+        }
+        else if (context.performed)
+        {
+            _heaviAttak = true;
+            _audioManager.PlayChargedAtackSound();
+        }
+        else if (context.canceled && _heaviAttak)
+        {
+            _anim.SetTrigger("Attack"); 
+            _anim.SetFloat("AttackNum", 4);
+            _sword.SetPosition(1);
+            StartCoroutine(TurnAttackCollider(_attackDuration));
+
+            _audioManager.PlayAttackSound();
+            
+            _tempSpeed = _speed;
+            _heaviAttak = false;
+            _holding = false;
+        }
+    }
+
 
     private IEnumerator TurnAttackCollider(float attackDuration)
     {
@@ -235,5 +237,14 @@ public class Player : MonoBehaviour
 
         _anim.SetFloat("Ver", Vector3.Dot(_rbSpeed,transform.forward));
         _anim.SetFloat("Hor", Vector3.Dot(_rbSpeed,transform.right));
+    }
+    
+    public void Jump(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            _rb.AddForce(Vector2.up * 5f, ForceMode.Impulse);
+            Debug.Log("JUMP");
+        }
     }
 }
