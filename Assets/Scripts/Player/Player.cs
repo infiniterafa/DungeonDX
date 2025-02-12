@@ -142,9 +142,16 @@ public class Player : MonoBehaviour
 
         if(_rbSpeed != Vector3.zero && !_audioSource.isPlaying)
         {
-            var i = Random.Range(0, _audiosWalk.Count);
-            _audioSource.clip = _audiosWalk[i];
-            _audioSource.Play();
+            if (_rbSpeed.y != 0)
+            {
+                //Debug.Log("FALLING");
+            }
+            else
+            {
+                var i = Random.Range(0, _audiosWalk.Count);
+                _audioSource.clip = _audiosWalk[i];
+                _audioSource.Play();
+            }
         }
     }
 

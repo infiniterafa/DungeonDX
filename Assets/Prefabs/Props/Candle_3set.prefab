@@ -221,7 +221,7 @@ MonoBehaviour:
   _light: {fileID: 0}
   _minBrightnes: 1
   _maxBrightnes: 3
-  _minWait: 0.2
+  _minWait: 0.25
   _maxWait: 2
 --- !u!1 &3811258807752872755
 GameObject:
@@ -357,7 +357,7 @@ MonoBehaviour:
   _light: {fileID: 0}
   _minBrightnes: 1
   _maxBrightnes: 3
-  _minWait: 0.2
+  _minWait: 0.25
   _maxWait: 2
 --- !u!1 &7989995427606745004
 GameObject:
@@ -493,5 +493,5 @@ MonoBehaviour:
   _light: {fileID: 0}
   _minBrightnes: 1
   _maxBrightnes: 3
-  _minWait: 0.2
+  _minWait: 0.25
   _maxWait: 2
