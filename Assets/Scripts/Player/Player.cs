@@ -127,6 +127,10 @@ public class Player : MonoBehaviour
                 _audioManager.PlayWalkSound();
             }
         }
+        else
+        {
+                _audioManager.StopWalkSound();
+        }
     }
 
     public void Movement_performed(InputAction.CallbackContext context)
@@ -134,6 +138,11 @@ public class Player : MonoBehaviour
         Debug.Log(context);
 
        _movement = context.ReadValue<Vector2>();
+
+        if(context.canceled)
+        {
+            _audioManager.StopWalkSound();
+        }
     }
 
     private void Rotate()
@@ -200,7 +209,8 @@ public class Player : MonoBehaviour
 
     public void NormalAttack(InputAction.CallbackContext context)
     {
-        if(_attacking)
+        
+        if(_attacking || inRange)
             return;
         
         if (context.started)
@@ -224,7 +234,7 @@ public class Player : MonoBehaviour
 
     public void HeavyAttack(InputAction.CallbackContext context)
     {
-        if(_attacking)
+        if(_attacking || inRange)
             return;
         
         if (context.started)

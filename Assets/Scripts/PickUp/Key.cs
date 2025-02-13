@@ -28,7 +28,6 @@ public class Key : MonoBehaviour
     {
         _player = GameObject.FindObjectOfType<Player>().gameObject;
         _inventorry = GameObject.FindObjectOfType<Inventorry>();
-        //_startPosition = transform.position;
     }
 
     void FixedUpdate()

@@ -18,10 +18,20 @@ public class AudioManager : MonoBehaviour
     public void PlayWalkSound()
     {
         if (!_soundEffects.isPlaying)
-        { 
+        {
+            _soundEffects.volume = 10.0f;
             _soundEffects.pitch = Random.Range(0.9f, 1.1f);
             _soundEffects.clip = _walk[Random.Range(0, _walk.Count)];
             _soundEffects.Play();
+        }
+    }
+
+    public void StopWalkSound()
+    {
+        if(_soundEffects.isPlaying) 
+        {
+            _soundEffects.clip = null;
+            _soundEffects.Pause();
         }
     }
 

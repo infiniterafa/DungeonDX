@@ -67,4 +67,19 @@ public class Inventorry : MonoBehaviour
                 _pickedObjectsUses.RemoveAt(_selectedObject);
         }
     }
+
+    public void AddGold(int _amount)
+    {
+
+    }
+
+    public void RemoveGold(int _amount) 
+    { 
+        
+    }
+
+    public int GetGold() 
+    {
+        return _gold;
+    }
 }
