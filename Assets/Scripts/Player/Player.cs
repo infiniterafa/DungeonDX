@@ -131,6 +131,8 @@ public class Player : MonoBehaviour
 
     public void Movement_performed(InputAction.CallbackContext context)
     {
+        Debug.Log(context);
+
        _movement = context.ReadValue<Vector2>();
     }
 

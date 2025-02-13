@@ -11,6 +11,8 @@ public class Inventorry : MonoBehaviour
     
     [SerializeField] private int _selectedObject;
 
+    public int _gold;
+
     // Start is called before the first frame update
     void Start()
     {
