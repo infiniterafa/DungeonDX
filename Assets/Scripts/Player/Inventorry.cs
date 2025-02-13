@@ -8,6 +8,8 @@ public class Inventorry : MonoBehaviour
     [SerializeField] private List<int> _pickedObjectsUses;
     [SerializeField] private GameObject _tempObj;
     [SerializeField] private Transform _transform;
+    
+    [SerializeField] private int _selectedObject;
 
     // Start is called before the first frame update
     void Start()
@@ -37,15 +39,30 @@ public class Inventorry : MonoBehaviour
         {
             if (_pickedObjects[i] == requieredItem)
             {
-                if (_pickedObjectsUses[i] <= 0)
-                {
-                    _pickedObjects.RemoveAt(i);
-                    _pickedObjectsUses.RemoveAt(i);
-                }
+               _selectedObject = i;
+               Debug.Log(_selectedObject);
                 return true;
             }
         }
 
         return false;
+    }
+
+    public void UseKey()
+    {
+        Debug.Log(_pickedObjectsUses[_selectedObject]);
+        
+        int temp = _pickedObjectsUses[_selectedObject];
+        temp -= 1;
+        
+        _pickedObjectsUses[_selectedObject] = temp;
+        
+        Debug.Log(_pickedObjectsUses[_selectedObject]);
+        
+        if (_pickedObjectsUses[_selectedObject] <= 0.0f)
+        {
+                _pickedObjects.RemoveAt(_selectedObject);
+                _pickedObjectsUses.RemoveAt(_selectedObject);
+        }
     }
 }

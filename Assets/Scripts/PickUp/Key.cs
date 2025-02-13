@@ -19,21 +19,24 @@ public class Key : MonoBehaviour
     public float _hopTop;
     public float _hopBottom;
     private float _currentHop = 0.0f;
-    private Vector3 _startPosition;
+    private Vector3 _startPosition = Vector3.zero;
     private Vector3 _deltaPosition;
     private bool _up = true;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         _player = GameObject.FindObjectOfType<Player>().gameObject;
         _inventorry = GameObject.FindObjectOfType<Inventorry>();
-        _startPosition = transform.position;
+        //_startPosition = transform.position;
     }
 
     void FixedUpdate()
     {
-        _deltaPosition = transform.position - _startPosition;
+        if (_startPosition == Vector3.zero)
+        {
+            return;
+        }
         
         //ROTATION ANIMATION
         _curAng += _turnSpeed * Time.deltaTime;
@@ -43,8 +46,9 @@ public class Key : MonoBehaviour
         }
         gameObject.transform.rotation = Quaternion.Euler(-90.0f,0.0f,_curAng);
 
-
         //HOP ANIMATION
+        _deltaPosition = transform.position - _startPosition;
+        
         if (_up)
         {
             if (_deltaPosition.y < _hopTop)
@@ -78,10 +82,14 @@ public class Key : MonoBehaviour
             _inventorry.TakePickUp(this.gameObject, _uses);
         }
 
-        //Debug.Log(other.gameObject.name);
-    }
-
-    void Collect()
-    {
+        if (other.gameObject.layer == 31)
+        {
+            _startPosition = transform.position + new Vector3(0.1f,0.1f,0.1f);
+            gameObject.GetComponent<Rigidbody>().constraints =  RigidbodyConstraints.FreezeRotationX 
+                                                                | RigidbodyConstraints.FreezePositionY 
+                                                                | RigidbodyConstraints.FreezeRotationZ;
+            //Debug.Log(_startPosition);
+        }
+        //Debug.Log(other.gameObject.layer);
     }
 }

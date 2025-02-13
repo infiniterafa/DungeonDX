@@ -178,6 +178,14 @@ public class Player : MonoBehaviour
             if (chest)
             {
                 _interactionObject.GetComponent<Chest>().DropReward();
+                _inventorry.UseKey();
+            }
+        }
+        else
+        {
+            if (chest)
+            {
+                _interactionObject.GetComponent<Chest>().Loked();
             }
         }
     }
