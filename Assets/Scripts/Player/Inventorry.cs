@@ -1,17 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class Inventorry : MonoBehaviour
 {
     [SerializeField] private List<GameObject> _pickedObjects;
     [SerializeField] private List<int> _pickedObjectsUses;
+    [SerializeField] private int _gold;
+
     [SerializeField] private GameObject _tempObj;
     [SerializeField] private Transform _transform;
     
     [SerializeField] private int _selectedObject;
-
-    public int _gold;
 
     // Start is called before the first frame update
     void Start()
@@ -25,9 +26,41 @@ public class Inventorry : MonoBehaviour
         
     }
 
+    public void TakeGold(GameObject gold, int value)
+    {
+        gold.GetComponent<Gold>().PickUpEfect();
+        gold.transform.position = _transform.position;
+        gold.transform.parent = _transform;
+
+        _gold += value;
+
+    }
+
+    public void UseGold(int amout)
+    {
+        if(HaveGold(amout)) 
+        { 
+            _gold -= amout;
+        }
+        else
+        {
+            Debug.Log("CAN'T AFORD");
+        }
+    }
+
+    public bool HaveGold(int cost)
+    {
+        return _gold >= cost;
+    }
+
+    public int GetGold() 
+    {
+        return _gold;
+    }
+
     public void TakePickUp(GameObject pickUp, int uses)
     {
-        pickUp.SetActive(false);
+        pickUp.GetComponent<Key>().PickUpEfect();
         pickUp.transform.position = _transform.position;
         pickUp.transform.parent = _transform;
 
@@ -68,18 +101,4 @@ public class Inventorry : MonoBehaviour
         }
     }
 
-    public void AddGold(int _amount)
-    {
-
-    }
-
-    public void RemoveGold(int _amount) 
-    { 
-        
-    }
-
-    public int GetGold() 
-    {
-        return _gold;
-    }
 }

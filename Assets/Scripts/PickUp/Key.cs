@@ -23,6 +23,12 @@ public class Key : MonoBehaviour
     private Vector3 _deltaPosition;
     private bool _up = true;
 
+    [Header("Audio")]
+    public GameObject _model;
+    private AudioSource _audioSource;
+    public AudioClip _pickUpAudioClip;
+    public AudioClip _hoverAudioClip;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -90,5 +96,29 @@ public class Key : MonoBehaviour
             //Debug.Log(_startPosition);
         }
         //Debug.Log(other.gameObject.layer);
+    }
+
+    IEnumerator TakeKey()
+    {
+        if (_pickUpAudioClip != null)
+        {
+            Debug.Log("START CORRUTINE");
+            _audioSource.clip = _pickUpAudioClip;
+            _audioSource.pitch = Random.Range(0.9f, 1.1f);
+            _audioSource.volume = 1.0f;
+            _audioSource.Play();
+
+            yield return new WaitForSeconds(1.0f);
+
+            this.gameObject.SetActive(false);
+        }
+
+        Debug.Log("End wait");
+        this.gameObject.SetActive(false);
+    }
+
+    public void PickUpEfect()
+    {
+        StartCoroutine(TakeKey());
     }
 }

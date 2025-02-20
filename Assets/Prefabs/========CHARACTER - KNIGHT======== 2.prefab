@@ -126,7 +126,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 4cc2ff7fb34ba8745a7fd858d1111816, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.5
   m_Pitch: 1
@@ -258,8 +258,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _pickedObjects: []
   _pickedObjectsUses: 
+  _gold: 0
   _tempObj: {fileID: 0}
   _transform: {fileID: 0}
+  _selectedObject: 0
 --- !u!1 &1246662818011597692
 GameObject:
   m_ObjectHideFlags: 0
@@ -716,7 +718,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -925,7 +927,7 @@ Transform:
   - {fileID: 891125335314631209}
   - {fileID: 2077844634420006549}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &7784157123912669156
 MonoBehaviour:
@@ -979,8 +981,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _pickedObjects: []
   _pickedObjectsUses: 
+  _gold: 0
   _tempObj: {fileID: 0}
   _transform: {fileID: 0}
+  _selectedObject: 0
 --- !u!82 &3014002465144741444
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1004,7 +1008,7 @@ AudioSource:
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -1022,7 +1026,7 @@ AudioSource:
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0
+      value: 0.9958191
       inSlope: 0
       outSlope: 0
       tangentMode: 0
