@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,9 +7,12 @@ public class EnemyScript : MonoBehaviour
     public EnemyStatsSO stats;
     public Rigidbody rb;
 
+    public int hp;
+
     public NavMeshAgent agent;
     public Transform agentDestination;
 
+    private Coroutine stopMovementCoroutine;
     public float atkTimer;
 
     private void Awake()
@@ -20,22 +22,21 @@ public class EnemyScript : MonoBehaviour
 
     private void Update()
     {
-        if (stats.hp > 0)
-        {
-            Movement();
-        }
-        else
-            gameObject.SetActive(false);
+        Movement();
     }
 
     private void Movement()
     {
-        agent.destination = agentDestination.position;  
+        agent.destination = agentDestination.position;
     }
 
     public void TakeDamage(int _dmg)
     {
-        stats.hp -= _dmg;
+        hp -= _dmg;
+
+        if (hp <= 0)
+            gameObject.SetActive(false);
+
     }
 
     private void Attack(Player _player)
@@ -54,6 +55,20 @@ public class EnemyScript : MonoBehaviour
     private void OnCollisionStay(Collision collision)
     {
         if (collision.transform.CompareTag("Player"))
+        {
             Attack(collision.transform.gameObject.GetComponent<Player>());
+            rb.velocity = Vector3.zero;
+
+            if (stopMovementCoroutine != null)
+                StopCoroutine(stopMovementCoroutine);
+            stopMovementCoroutine = StartCoroutine(StopMovement());
+        }
+    }
+
+    private IEnumerator StopMovement()
+    {
+        agent.isStopped = true;
+        yield return new WaitForSeconds(3);
+        agent.isStopped = false;
     }
 }
