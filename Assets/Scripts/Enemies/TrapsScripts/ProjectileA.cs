@@ -44,6 +44,7 @@ public class ProjectileA : MonoBehaviour
 
         if(tag == "Player")
         {
+            dMono = collider.transform.gameObject.GetComponent<Player>();
             if(dMono != null)
             {
                 dMono.TakeDamage(damage);

@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     public static PauseMenu instance;
+    private Player player;
 
     public bool GameIsPaused = false;
     public bool canPause = true;
@@ -22,6 +23,8 @@ public class PauseMenu : MonoBehaviour
     {
         instance = this;
 
+        player = FindObjectOfType<Player>().GetComponent<Player>(); ;
+
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
@@ -31,7 +34,7 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        if (canPause == true)
+        if (canPause == true && !player._isDead)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {

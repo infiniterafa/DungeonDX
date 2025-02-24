@@ -56,6 +56,10 @@ public class Player : MonoBehaviour
     public bool inRange = false;
     public bool chest = false;
 
+    [Header("UI")]
+    public GameObject _hud;
+    public GameObject _GOUI;
+
     void Awake()
     {
         _playerInput = this.gameObject.GetComponent<PlayerInput>();
@@ -76,16 +80,10 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if(!_attacking)
+        if(!_attacking && !_isDead)
         {
             _movement = _playerInputActions.Player.Movement.ReadValue<Vector2>();
             Movement();
-        }
-
-        if(_hp <= 0)
-        {
-            _healthBar.SetHealth(0);
-            _anim.SetTrigger("Dead");
         }
     }
 
@@ -209,7 +207,7 @@ public class Player : MonoBehaviour
     public void NormalAttack(InputAction.CallbackContext context)
     {
         
-        if(_attacking || inRange)
+        if(_attacking || inRange || _isDead)
             return;
         
         if (context.started)
@@ -233,7 +231,7 @@ public class Player : MonoBehaviour
 
     public void HeavyAttack(InputAction.CallbackContext context)
     {
-        if(_attacking || inRange)
+        if(_attacking || inRange || _isDead)
             return;
         
         if (context.started)
@@ -273,8 +271,36 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int dmg)
     {
-        _hp -= dmg;
-        _healthBar.SetHealth(_hp);
+        if(!_isDead)
+        {
+            _hp -= dmg;
+            _healthBar.SetHealth(_hp);
+
+            if (_hp <= 0)
+            {
+                StartCoroutine(Death());
+            }
+        }
+    }
+
+    private IEnumerator Death()
+    {
+        _isDead = true;
+        _anim.SetTrigger("Dead");
+
+        yield return new WaitForSeconds(0.8f);
+
+        gameObject.SetActive(false);
+        GameOver();
+    }
+
+    private void GameOver()
+    {
+        Time.timeScale = 0;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+        _hud.SetActive(false);
+        _GOUI.SetActive(true);
     }
 
     private void Animate()
@@ -296,6 +322,9 @@ public class Player : MonoBehaviour
     
     public void Jump(InputAction.CallbackContext context)
     {
+        if (_isDead)
+            return;
+
         if (context.started)
         {
             _rb.AddForce(Vector2.up * 5f, ForceMode.Impulse);
