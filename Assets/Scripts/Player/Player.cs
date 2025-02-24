@@ -33,7 +33,6 @@ public class Player : MonoBehaviour
     public int _maxHp = 10;
     public HealthBar _healthBar;
 
-
     [Header("Attack")]
     public bool _attacking = false;
     public bool _holding = false;

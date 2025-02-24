@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Key : MonoBehaviour
 {
+    [Header("UI")]
+    public Image keyIcon;
+
     [Header("INVENTORY PARAMETERS")]
     private GameObject _player;
     private Inventorry _inventorry;
@@ -103,10 +107,11 @@ public class Key : MonoBehaviour
         if (_pickUpAudioClip != null)
         {
             Debug.Log("START CORRUTINE");
-            _audioSource.clip = _pickUpAudioClip;
-            _audioSource.pitch = Random.Range(0.9f, 1.1f);
-            _audioSource.volume = 1.0f;
-            _audioSource.Play();
+            //_audioSource.clip = _pickUpAudioClip;
+            //_audioSource.pitch = Random.Range(0.9f, 1.1f);
+            //_audioSource.volume = 1.0f;
+            //_audioSource.Play();
+            keyIcon.gameObject.SetActive(true);
 
             yield return new WaitForSeconds(1.0f);
 

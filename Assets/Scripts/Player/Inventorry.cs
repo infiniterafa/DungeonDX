@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
 
 public class Inventorry : MonoBehaviour
 {
+    [Header("UI")]
+    public Text goldText;
+
     [SerializeField] private List<GameObject> _pickedObjects;
     [SerializeField] private List<int> _pickedObjectsUses;
     [SerializeField] private int _gold;
@@ -14,16 +18,10 @@ public class Inventorry : MonoBehaviour
     
     [SerializeField] private int _selectedObject;
 
-    // Start is called before the first frame update
     void Start()
     {
         _transform = transform;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        UpdateUIGoldValue();
     }
 
     public void TakeGold(GameObject gold, int value)
@@ -33,7 +31,7 @@ public class Inventorry : MonoBehaviour
         gold.transform.parent = _transform;
 
         _gold += value;
-
+        UpdateUIGoldValue();
     }
 
     public void UseGold(int amout)
@@ -41,6 +39,7 @@ public class Inventorry : MonoBehaviour
         if(HaveGold(amout)) 
         { 
             _gold -= amout;
+            UpdateUIGoldValue();
         }
         else
         {
@@ -101,4 +100,8 @@ public class Inventorry : MonoBehaviour
         }
     }
 
+    private void UpdateUIGoldValue()
+    {
+        goldText.text = _gold.ToString();
+    }
 }

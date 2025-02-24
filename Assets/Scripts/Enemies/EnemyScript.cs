@@ -61,7 +61,9 @@ public class EnemyScript : MonoBehaviour
 
             if (stopMovementCoroutine != null)
                 StopCoroutine(stopMovementCoroutine);
-            stopMovementCoroutine = StartCoroutine(StopMovement());
+
+            if(!gameObject)
+                stopMovementCoroutine = StartCoroutine(StopMovement());
         }
     }
 
