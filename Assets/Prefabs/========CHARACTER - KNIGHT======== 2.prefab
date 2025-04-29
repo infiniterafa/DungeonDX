@@ -256,6 +256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 247429284c9852746b4fb015a5fc00b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  goldText: {fileID: 0}
   _pickedObjects: []
   _pickedObjectsUses: 
   _gold: 0
@@ -967,6 +968,8 @@ MonoBehaviour:
   canCollect: 0
   inRange: 0
   chest: 0
+  _hud: {fileID: 0}
+  _GOUI: {fileID: 0}
 --- !u!114 &6100250111830827403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -979,6 +982,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 247429284c9852746b4fb015a5fc00b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  goldText: {fileID: 0}
   _pickedObjects: []
   _pickedObjectsUses: 
   _gold: 0
