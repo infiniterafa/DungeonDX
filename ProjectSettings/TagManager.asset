@@ -7,6 +7,8 @@ TagManager:
   - Enemy
   - Transition
   - StaticRoomCamera
+  - Door
+  - TriggerDoor
   layers:
   - Default
   - TransparentFX
