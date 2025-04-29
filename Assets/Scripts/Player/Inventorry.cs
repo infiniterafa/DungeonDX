@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
+using TMPro; 
 
 public class Inventorry : MonoBehaviour
 {
     [Header("UI")]
-    public Text goldText;
+    [SerializeField] TextMeshProUGUI goldText;
 
     [SerializeField] private List<GameObject> _pickedObjects;
     [SerializeField] private List<int> _pickedObjectsUses;
