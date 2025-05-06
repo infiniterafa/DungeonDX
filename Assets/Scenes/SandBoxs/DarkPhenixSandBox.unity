@@ -405,6 +405,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2090034673}
     m_Modifications:
+    - target: {fileID: 3104969490997737322, guid: 83f4ca17a9db8c245a3db06c18fde11d,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.51
+      objectReference: {fileID: 0}
     - target: {fileID: 3720197847880209894, guid: 83f4ca17a9db8c245a3db06c18fde11d,
         type: 3}
       propertyPath: agentDestination
@@ -2104,6 +2109,11 @@ PrefabInstance:
       propertyPath: agentDestination
       value: 
       objectReference: {fileID: 6791044905038952293}
+    - target: {fileID: 3151647701288923226, guid: 61bf5f71fb1434c4294ec1589ec5ce1b,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.53
+      objectReference: {fileID: 0}
     - target: {fileID: 5715850843844334157, guid: 61bf5f71fb1434c4294ec1589ec5ce1b,
         type: 3}
       propertyPath: m_Name
