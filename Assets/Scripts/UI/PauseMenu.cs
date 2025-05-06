@@ -53,6 +53,13 @@ public class PauseMenu : MonoBehaviour
         HUD.SetActive(true);
         Time.timeScale = 1;
         GameIsPaused = false;
+        AudioSource[] audios = FindObjectsOfType<AudioSource>();
+
+        foreach (AudioSource a in audios )
+        {
+            a.Play();
+        }
+
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -66,6 +73,15 @@ public class PauseMenu : MonoBehaviour
         GameIsPaused = true;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
+
+
+        AudioSource[] audios = FindObjectsOfType<AudioSource>();
+
+        foreach (AudioSource a in audios)
+        {
+            a.Pause();
+        }
+
     }
 
     public void GoToMainMenu()
