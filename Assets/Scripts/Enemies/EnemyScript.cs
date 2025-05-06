@@ -4,6 +4,9 @@ using UnityEngine.AI;
 
 public class EnemyScript : MonoBehaviour
 {
+    [Header("Audio")]
+    [SerializeField] public EnemyAudioManager _audioManager;
+
     public EnemyStatsSO stats;
     public Rigidbody rb;
 
@@ -28,6 +31,7 @@ public class EnemyScript : MonoBehaviour
     private void Movement()
     {
         agent.destination = agentDestination.position;
+        _audioManager.PlayWalkSound();
     }
 
     public void TakeDamage(int _dmg)
@@ -72,5 +76,6 @@ public class EnemyScript : MonoBehaviour
         agent.isStopped = true;
         yield return new WaitForSeconds(3);
         agent.isStopped = false;
+        _audioManager.StopWalkSound();
     }
 }
