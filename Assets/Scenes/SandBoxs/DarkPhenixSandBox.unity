@@ -438,27 +438,27 @@ PrefabInstance:
     - target: {fileID: 4240412352067226985, guid: 83f4ca17a9db8c245a3db06c18fde11d,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4240412352067226985, guid: 83f4ca17a9db8c245a3db06c18fde11d,
-        type: 3}
-      propertyPath: m_LocalRotation.x
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4240412352067226985, guid: 83f4ca17a9db8c245a3db06c18fde11d,
         type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4240412352067226985, guid: 83f4ca17a9db8c245a3db06c18fde11d,
+        type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4240412352067226985, guid: 83f4ca17a9db8c245a3db06c18fde11d,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4240412352067226985, guid: 83f4ca17a9db8c245a3db06c18fde11d,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4240412352067226985, guid: 83f4ca17a9db8c245a3db06c18fde11d,
         type: 3}
@@ -10710,6 +10710,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 624319106388777145, guid: 2d12b7c998a0cd24ab46897ebfc5f681,
+        type: 3}
+      propertyPath: keyIcon
+      value: 
+      objectReference: {fileID: 383761494}
     - target: {fileID: 1192896993754345125, guid: 2d12b7c998a0cd24ab46897ebfc5f681,
         type: 3}
       propertyPath: m_RootOrder
@@ -10764,6 +10769,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2203730816046205585, guid: 2d12b7c998a0cd24ab46897ebfc5f681,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8539487700343249449, guid: 2d12b7c998a0cd24ab46897ebfc5f681,
         type: 3}

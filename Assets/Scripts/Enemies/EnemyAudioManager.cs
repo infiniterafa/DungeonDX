@@ -17,7 +17,7 @@ public class EnemyAudioManager : MonoBehaviour
     {
         if (!_soundEffects.isPlaying)
         {
-            _soundEffects.volume = 10.0f;
+            _soundEffects.volume = 0.5f;
             _soundEffects.pitch = Random.Range(0.9f, 1.1f);
             _voiceLines.clip = _gruntsClips[Random.Range(0, _gruntsClips.Count)];
             _soundEffects.clip = _walk[Random.Range(0, _walk.Count)];

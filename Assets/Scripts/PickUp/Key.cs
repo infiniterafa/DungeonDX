@@ -84,7 +84,7 @@ public class Key : MonoBehaviour
         gameObject.transform.position += new Vector3(0.0f,_currentHop, 0.0f); 
     }
 
-    void OnCollisionEnter(Collision other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == _player)
         {
