@@ -10129,7 +10129,7 @@ Transform:
   - {fileID: 3920535953085018116}
   - {fileID: 8999003206333751016}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!114 &624319106388777145
 MonoBehaviour:
@@ -10143,6 +10143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b887276f9640d14982d4d9808d051ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  keyIcon: {fileID: 0}
   _uses: 1
   _turnSpeed: 20
   _hopSpeed: 0.5
@@ -10166,7 +10167,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -10194,8 +10195,8 @@ Rigidbody:
     m_Bits: 1143
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0

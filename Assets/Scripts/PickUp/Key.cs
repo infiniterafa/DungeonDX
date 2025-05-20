@@ -38,7 +38,14 @@ public class Key : MonoBehaviour
     {
         _player = GameObject.FindObjectOfType<Player>().gameObject;
         _inventorry = GameObject.FindObjectOfType<Inventorry>();
+        _audioSource = gameObject.GetComponent<AudioSource>();
+
+        if (_audioSource == null)
+        {
+            _audioSource = gameObject.AddComponent<AudioSource>();
+        }
     }
+
 
     void FixedUpdate()
     {
@@ -84,7 +91,7 @@ public class Key : MonoBehaviour
         gameObject.transform.position += new Vector3(0.0f,_currentHop, 0.0f); 
     }
 
-    void OnCollisionEnter(Collision other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == _player)
         {
@@ -107,10 +114,10 @@ public class Key : MonoBehaviour
         if (_pickUpAudioClip != null)
         {
             Debug.Log("START CORRUTINE");
-            //_audioSource.clip = _pickUpAudioClip;
-            //_audioSource.pitch = Random.Range(0.9f, 1.1f);
-            //_audioSource.volume = 1.0f;
-            //_audioSource.Play();
+            _audioSource.clip = _pickUpAudioClip;
+            _audioSource.pitch = Random.Range(0.9f, 1.1f);
+            _audioSource.volume = 10.0f;
+            _audioSource.Play();
             keyIcon.gameObject.SetActive(true);
 
             yield return new WaitForSeconds(1.0f);
