@@ -11,12 +11,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainScene.unity
     guid: 5ea1cab9ebf99124791d7a8a227ad2e2
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/SandBoxs/DarkPhenixSandBox.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 0
     path: Assets/Scenes/SandBoxs/FabianSandbox.unity
     guid: e1022b1bfb754ea4c8b01107fd0296e8
+  - enabled: 1
+    path: Assets/AA/SceneVictory.unity
+    guid: 5c8eb522dd020d14899a0b53c1935e69
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: eb137d9a336cf0f4b9c21b1f0d10b472,
       type: 2}

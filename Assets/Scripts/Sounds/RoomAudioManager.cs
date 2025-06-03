@@ -21,6 +21,8 @@ public class RoomAudioManager : MonoBehaviour
             audioSource = gameObject.AddComponent<AudioSource>();
             audioSource.loop = true;
             audioSource.playOnAwake = false;
+            audioSource.volume = 0.3f; 
+
         }
         else
         {
@@ -28,7 +30,7 @@ public class RoomAudioManager : MonoBehaviour
         }
     }
 
-    public void ReproducirSonidoCuarto(AudioClip nuevoClip)
+    public void ReproducirSonidoCuarto(AudioClip nuevoClip, float volumen)
     {
         if (audioSource.clip == nuevoClip)
             return;
@@ -36,12 +38,11 @@ public class RoomAudioManager : MonoBehaviour
         if (currentFadeCoroutine != null)
             StopCoroutine(currentFadeCoroutine);
 
-        currentFadeCoroutine = StartCoroutine(FadeToClip(nuevoClip));
+        currentFadeCoroutine = StartCoroutine(FadeToClip(nuevoClip, volumen));
     }
 
-    private IEnumerator FadeToClip(AudioClip nuevoClip)
+    private IEnumerator FadeToClip(AudioClip nuevoClip, float targetVolume)
     {
-        // Fade Out
         float startVolume = audioSource.volume;
         for (float t = 0; t < fadeDuration; t += Time.deltaTime)
         {
@@ -51,16 +52,19 @@ public class RoomAudioManager : MonoBehaviour
         audioSource.volume = 0f;
         audioSource.Stop();
 
-        // Cambiar clip
         audioSource.clip = nuevoClip;
         audioSource.Play();
 
-        // Fade In
         for (float t = 0; t < fadeDuration; t += Time.deltaTime)
         {
-            audioSource.volume = Mathf.Lerp(0f, startVolume, t / fadeDuration);
+            audioSource.volume = Mathf.Lerp(0f, targetVolume, t / fadeDuration);
             yield return null;
         }
-        audioSource.volume = startVolume;
+        audioSource.volume = targetVolume;
     }
+    private IEnumerator FadeToClip(AudioClip nuevoClip)
+    {
+        yield return FadeToClip(nuevoClip, audioSource.volume);
+    }
+
 }

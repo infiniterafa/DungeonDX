@@ -1,17 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
 
 public class SystemDoor : MonoBehaviour
 {
-    public bool doorOpen = false; //Verificar si la puerta esta cerrada o abierta.
-    public float doorOpenAngle = 95f; //Angulo de la puerta al estar abierta.
-    public float doorCloseAngle = 0.0f; //Angulo de la puerta al estar cerrada.
-    public float smooth = 3.0f; // Velocidad con la que rotara la puerta.
+    public bool doorOpen = false;
+    public float doorOpenAngle = 95f;
+    public float doorCloseAngle = 0.0f;
+    public float smooth = 3.0f;
 
     public AudioClip openDoor;
     public AudioClip closeDoor;
-    
+
+    private GameObject jugador;
+    private bool enRango = false;
+
+    [SerializeField] private SystemMessageUI mensajeUI;
+
     public void ChangeDoorState()
     {
         doorOpen = !doorOpen;
@@ -19,31 +27,57 @@ public class SystemDoor : MonoBehaviour
 
     void Update()
     {
-        if (doorOpen)
+        if (enRango && jugador != null && Input.GetKeyDown(KeyCode.F))
         {
-            Quaternion targetRotation = Quaternion.Euler(0, doorOpenAngle, 0);
-            transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, smooth * Time.deltaTime);
+            Inventorry inv = jugador.GetComponent<Inventorry>();
+            Debug.Log("¿Presionaste F? Sí");
+            Debug.Log("¿Tiene inventario? " + (inv != null));
+            Debug.Log("¿Tiene llave del Boss? " + (inv?.tieneLlaveBoss));
+
+            if (inv != null && inv.tieneLlaveBoss)
+            {
+                Debug.Log("Llave del boss detectada. Abrimos puerta.");
+                ChangeDoorState();
+                inv.tieneLlaveBoss = false;
+            }
+            else
+            {
+                Debug.Log("No tienes la llave correcta. Puerta NO se abre.");
+            }
         }
-        else
-        {
-            Quaternion targetRotation2 = Quaternion.Euler(0, doorCloseAngle, 0);
-            transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation2, smooth * Time.deltaTime);
-        }
+
+        Quaternion targetRotation = Quaternion.Euler(0, doorOpen ? doorOpenAngle : doorCloseAngle, 0);
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, smooth * Time.deltaTime);
     }
+
+
+
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "TriggerDoor")
+        if (other.CompareTag("Player"))
         {
-            AudioSource.PlayClipAtPoint(closeDoor, transform.position, 1);
+            jugador = other.gameObject;
+            enRango = true;
+        }
+
+        if (other.CompareTag("TriggerDoor"))
+        {
+            AudioSource.PlayClipAtPoint(closeDoor, transform.position, 1f);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "TriggerDoor")
+        if (other.CompareTag("Player"))
         {
-            AudioSource.PlayClipAtPoint(openDoor, transform.position, 1);
+            jugador = null;
+            enRango = false;
+        }
+
+        if (other.CompareTag("TriggerDoor"))
+        {
+            AudioSource.PlayClipAtPoint(openDoor, transform.position, 1f);
         }
     }
 }

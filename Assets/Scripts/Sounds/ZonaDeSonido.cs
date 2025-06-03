@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class ZonaDeSonido : MonoBehaviour
@@ -9,7 +8,7 @@ public class ZonaDeSonido : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            RoomAudioManager.Instance.ReproducirSonidoCuarto(sonido);
+            RoomAudioManager.Instance.ReproducirSonidoCuarto(sonido, 0.2f);
         }
     }
 }

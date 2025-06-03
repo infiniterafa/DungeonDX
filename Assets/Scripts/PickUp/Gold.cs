@@ -10,7 +10,6 @@ public class Gold : MonoBehaviour
     private Inventorry _inventorry;
     [SerializeField] private int _value;
 
-
     [Header("TURN EFFECTS")]
     public float _turnSpeed;
     private float _curAng = 0.0f;
@@ -87,7 +86,20 @@ public class Gold : MonoBehaviour
     {
         if (other.gameObject == _player)
         {
-            _inventorry.TakeGold(this.gameObject, _value);
+            if (CompareTag("Rupia"))
+            {
+                _inventorry.AddRupia();
+                PickUpEfect();
+            }
+            else if (CompareTag("RupiaFinal"))
+            {
+                _model?.SetActive(false);
+                PickUpEfect();
+            }
+            else
+            {
+                _inventorry.TakeGold(this.gameObject, _value);
+            }
         }
 
         if (other.gameObject.layer == 31)
@@ -96,27 +108,64 @@ public class Gold : MonoBehaviour
             this.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX
                                                                 | RigidbodyConstraints.FreezePositionY
                                                                 | RigidbodyConstraints.FreezeRotationZ;
-            //Debug.Log(_startPosition);
         }
-        //Debug.Log(other.gameObject.layer);
     }
 
     IEnumerator TakeGold()
     {
-        if(_pickUpAudioClip)
+        if (_pickUpAudioClip != null && _audioSource != null)
         {
             _audioSource.clip = _pickUpAudioClip;
             _audioSource.pitch = Random.Range(0.9f, 1.1f);
             _audioSource.volume = 1.0f;
             _audioSource.Play();
-            yield return new WaitForSeconds(_pickUpAudioClip.length);
         }
 
-        this.gameObject.SetActive(false);
+        // Desactiva el modelo visual inmediatamente
+        if (_model != null)
+            _model.SetActive(false);
+
+        if (_pickUpAudioClip != null)
+            yield return new WaitForSeconds(_pickUpAudioClip.length);
+
+        // Este método ya no lo usamos para RupiaFinal
     }
 
     public void PickUpEfect()
     {
-        StartCoroutine(TakeGold());
+        if (_model != null)
+            _model.SetActive(false);
+
+        if (CompareTag("RupiaFinal"))
+        {
+            // Solución que garantiza que sí suene aunque el objeto desaparezca
+            GameObject tempAudio = new GameObject("TempAudio");
+            AudioSource tempSource = tempAudio.AddComponent<AudioSource>();
+            tempSource.clip = _pickUpAudioClip;
+            tempSource.volume = 1f;
+            tempSource.spatialBlend = 0f;
+            tempSource.Play();
+            Destroy(tempAudio, _pickUpAudioClip.length);
+
+            Invoke(nameof(DisableObject), _pickUpAudioClip.length);
+        }
+        else if (_pickUpAudioClip != null && _audioSource != null)
+        {
+            _audioSource.clip = _pickUpAudioClip;
+            _audioSource.pitch = Random.Range(0.9f, 1.1f);
+            _audioSource.volume = 1.0f;
+            _audioSource.Play();
+
+            Invoke(nameof(DisableObject), _pickUpAudioClip.length);
+        }
+        else
+        {
+            DisableObject();
+        }
+    }
+
+    private void DisableObject()
+    {
+        gameObject.SetActive(false);
     }
 }

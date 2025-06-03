@@ -9,6 +9,10 @@ TagManager:
   - StaticRoomCamera
   - Door
   - TriggerDoor
+  - PuertaFinal
+  - LlaveBoss
+  - Rupia
+  - RupiaFinal
   layers:
   - Default
   - TransparentFX
