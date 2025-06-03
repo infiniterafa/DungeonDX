@@ -15,7 +15,7 @@ public class TutorialMensajes : MonoBehaviour
     {
         if (mensajeUI != null)
         {
-            mensajeUI.MostrarMensaje("Busca la llave que abre el cofre, para la puerta ", 10f);
+            mensajeUI.MostrarMensaje("Busca la llave que abre el cofre, para la puerta del Boss ", 10f);
             mostroMensajeInicial = true;
         }
 
