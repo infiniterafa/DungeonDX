@@ -5,7 +5,7 @@ using UnityEngine;
 public class BossDrop : MonoBehaviour
 {
     [SerializeField] private GameObject rupiaBoss;
-    [SerializeField] private EnemyScript enemyScript;
+    [SerializeField] private GolemScript enemyScript;
 
     private bool dropped = false;
 
