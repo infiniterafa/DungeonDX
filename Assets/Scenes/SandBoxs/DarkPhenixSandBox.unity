@@ -1348,7 +1348,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -286.7, y: -100}
+  m_AnchoredPosition: {x: -286.7, y: 0}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &321192575
@@ -2362,7 +2362,7 @@ GameObject:
   - component: {fileID: 661990870}
   m_Layer: 31
   m_Name: Ground (1)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5481,7 +5481,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -468, y: -100}
+  m_AnchoredPosition: {x: -468, y: 0}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!23 &16635206857851897
@@ -5940,10 +5940,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: ========ROOM1L==========
       objectReference: {fileID: 0}
+    - target: {fileID: 2983036706748934998, guid: 4c8d5b0039c7d154db4f129e1a92c6e7,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 3344557144209366349, guid: 4c8d5b0039c7d154db4f129e1a92c6e7,
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3344557144209366349, guid: 4c8d5b0039c7d154db4f129e1a92c6e7,
+        type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     - target: {fileID: 3800203094435619554, guid: 4c8d5b0039c7d154db4f129e1a92c6e7,
         type: 3}
@@ -9452,7 +9462,7 @@ GameObject:
   - component: {fileID: 5777496858511175727}
   m_Layer: 31
   m_Name: Ground
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10626,6 +10636,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1088904379}
     m_Modifications:
+    - target: {fileID: 149214391363736112, guid: 818f77c13869adf499934300fd7de9da,
+        type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
     - target: {fileID: 2039568998094239341, guid: 818f77c13869adf499934300fd7de9da,
         type: 3}
       propertyPath: m_RootOrder

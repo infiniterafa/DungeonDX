@@ -17,6 +17,9 @@ public class Player : MonoBehaviour
     public Vector3 _cameraFoward;
     public Vector3 _cameraRight;
 
+    public bool playerInGround = true; 
+    public  float jumpCounter = 0.0f; 
+
     public float _speed;
     public float _holdingSpeed;
     public float _rotationSpeed;
@@ -319,18 +322,35 @@ public class Player : MonoBehaviour
         _anim.SetFloat("Ver", Vector3.Dot(_rbSpeed,transform.forward));
         _anim.SetFloat("Hor", Vector3.Dot(_rbSpeed,transform.right));
     }
-    
+
     public void Jump(InputAction.CallbackContext context)
     {
         if (_isDead)
             return;
 
-        if (context.started)
+        if ((context.started) && playerInGround == true ) 
         {
+            //_rb.AddForce(Vector2.up * 5f, ForceMode.Impulse);
+            //Debug.Log("JUMP");
+
+            //if (jumpCounter == 0)
+            //    return;
+
+            Debug.Log("Jump");
             _rb.AddForce(Vector2.up * 5f, ForceMode.Impulse);
-            Debug.Log("JUMP");
+            //jumpCounter--;
 
+            playerInGround = false;
 
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+
+        {
+            playerInGround = true; 
         }
     }
 }

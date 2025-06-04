@@ -26,7 +26,7 @@ public class TutorialMensajes : MonoBehaviour
     {
         if (mostroMensajeInicial && !mostroMensajeLlave && inventorry != null && inventorry.tieneLlaveBoss)
         {
-            mensajeUI.MostrarMensaje("¡Recogiste la llave del Boss!, Ahora presiona f justo en la PERILLA de la puerta", 10f);
+            mensajeUI.MostrarMensaje("¡Recogiste la llave del Boss!, Ahora salta y presiona F justo en la PERILLA de la puerta", 10f);
             mostroMensajeLlave = true;
         }
     }
