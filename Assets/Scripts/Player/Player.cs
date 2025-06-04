@@ -58,7 +58,7 @@ public class Player : MonoBehaviour
 
     [Header("UI")]
     public GameObject _hud;
-    //public GameObject _GOUI;
+    public GameObject _deathMenu;
 
     void Awake()
     {
@@ -300,7 +300,7 @@ public class Player : MonoBehaviour
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
         _hud.SetActive(false);
-        //_GOUI.SetActive(true);
+        _deathMenu.SetActive(true);
     }
 
     private void Animate()
